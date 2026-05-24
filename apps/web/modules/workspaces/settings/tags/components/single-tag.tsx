@@ -64,6 +64,10 @@ export const SingleTag: React.FC<SingleTagProps> = ({
 
   const handleUpdateTagName = async (e: React.FocusEvent<HTMLInputElement>) => {
     const result = await updateTagNameAction({ tagId, name: e.target.value.trim() });
+    if (result?.serverError) {
+      toast.error(getFormattedErrorMessage(result));
+      return;
+    }
     if (result?.data) {
       if (result.data.ok) {
         setUpdateTagError(false);
