@@ -129,6 +129,10 @@ export function CsvImportModal({
     const result = await importCsvDataAction({ connectorId, workspaceId, csvData: parsedData });
     setIsImporting(false);
 
+    if (result?.serverError) {
+      toast.error(getFormattedErrorMessage(result));
+      return;
+    }
     if (result?.data) {
       toast.success(
         t("workspace.unify.csv_import_complete", {
