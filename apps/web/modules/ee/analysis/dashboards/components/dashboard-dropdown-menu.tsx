@@ -39,6 +39,10 @@ export const DashboardDropdownMenu = ({
     setIsDuplicating(true);
     try {
       const result = await duplicateDashboardAction({ workspaceId, dashboardId });
+      if (result?.serverError) {
+        toast.error(getFormattedErrorMessage(result));
+        return;
+      }
       if (result?.data) {
         toast.success(t("workspace.analysis.dashboards.duplicate_success"));
         router.refresh();
