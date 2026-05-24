@@ -55,7 +55,11 @@ export function ChartDropdownMenu({ workspaceId, chart, onEdit }: Readonly<Chart
           return;
         }
 
-        if (result?.data) {
+        if (result?.serverError) {
+        toast.error(getFormattedErrorMessage(result));
+        return;
+      }
+      if (result?.data) {
           setDashboards(
             result.data.map((dashboard) => ({
               id: dashboard.id,
